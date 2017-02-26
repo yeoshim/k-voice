@@ -1,7 +1,11 @@
 <ion-view view-title="K-Voice">
   <ion-content>
-    <div class="bar bar-subheader bar-stable static text-center">
-      <strong class="title">K-Voice</strong>
+    <div class="bar bar-subheader bar-positive static text-center" ng-show="isConnected">
+      <strong class="title">K-Voice (connected)</strong>
+    </div>
+
+    <div class="bar bar-subheader bar-assertive static text-center" ng-show="!isConnected">
+      <strong class="title">K-Voice (not connected)</strong>
     </div>
 
     <div class="card" style="margin-top: 0px; margin-bottom: 0px">

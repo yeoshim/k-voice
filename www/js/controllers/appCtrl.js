@@ -15,6 +15,7 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
   };
 
   $scope.width = $window.innerWidth;
+  $scope.isConnected = false;
 
   const serverHost = 'localhost';
   var fileName = 'testWave';
@@ -30,22 +31,17 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
   const WAITING_TIME = 10000;  //  10 sec
   var isWating = false;
 
-  const INIT_MSG = '마이크 버튼을 누르고 말하세요.';
+  const INIT_MSG1 = '마이크 버튼을 누르고 말하세요. (실행시 접속됩니다.)';
+  const INIT_MSG2 = '마이크 버튼을 누르고 말하세요.';
   const SUCCESS_MSG = '성공!!! 해드셋 버튼을 누르면 재생됩니다.';
   const FAIL_MSG = '인식(분석)에 실패하였습니다. 다시 시도하세요...';
   const SPEAK_MSG = '말하세요';
 
-  $scope.text = {
-    header: INIT_MSG,
-    body: '',
-    footer: ''
-  };
-
   $rootScope.isSupported = true;
   $scope.audioSrc = null;
 
+  initText();
   initRecorder();
-
 
   $scope.isSuccess = function () {
     return $scope.text.header == SUCCESS_MSG;
@@ -111,9 +107,13 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
 //  functions
   function initText() {
     $scope.text = {
-      header: INIT_MSG,
+      header: INIT_MSG1,
       body: '',
       footer: ''
+    }
+
+    if( $scope.isConnected )  {
+      $scope.text.header = INIT_MSG2;
     }
   }
 
@@ -122,8 +122,16 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
 
     binaryClient = new BinaryClient('ws://'+serverHost+':9001');
 
+    binaryClient.on('error', function () {
+      $scope.isConnected = false;
+      alert( "서버("+serverHost+") 접속에 실패하였습니다. 잠시 후 접속 바랍니다.")
+      // $log.info('error client!!!');
+      return;
+    });
+
     binaryClient.on('open', function () {
       $log.info('open client!!!');
+      $scope.isConnected = true;
 
       var langCode = 'ko-KR'; //  default lang is ko
       var target = 'en';
@@ -164,7 +172,6 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
               $scope.audioSrc = $sce.trustAsResourceUrl(src);
               isPlayable = true;
               scopeApply();
-
               Loading.hide();
             });
           });
@@ -294,7 +301,12 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
         for(var i = 0; i < bufferLength; i++) {
           barHeight = dataArray[i];
 
-          canvasCtx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
+          if( isPlayable )  {
+            canvasCtx.fillStyle = 'rgb(50,50,' + (barHeight+100) + ')'; //  blue
+          }
+          else  {
+            canvasCtx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)'; //  red
+          }
           canvasCtx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight/2);
 
           x += barWidth + 1;
