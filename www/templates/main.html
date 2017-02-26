@@ -1,0 +1,48 @@
+<ion-view view-title="K-Voice">
+  <ion-content>
+    <div class="bar bar-subheader bar-stable static text-center">
+      <strong class="title">K-Voice</strong>
+    </div>
+
+    <div class="card">
+      <canvas class="visualizer" width={{width}} height="100"></canvas>
+    </div>
+
+    <div class="im-wrapper">
+      <div class="list">
+
+        <a class="item item-icon-left" ng-click="startRecord('ko-speech')" ng-show="!isRecording()">
+          <i class="icon ion-ios-mic-off"></i> 한국어
+        </a>
+        <a class="item item-icon-left" ng-click="startRecord('en-speech')" ng-show="!isRecording()">
+          <i class="icon ion-ios-mic-off"></i> 영어
+        </a>
+        <a class="item item-icon-left" ng-show="isRecording()">
+          <i class="icon ion-ios-mic"></i> 인식중...
+        </a>
+
+        <div class="card">
+          <div class="item item-divider">
+            {{text.header}}
+          </div>
+          <div class="item item-text-wrap">
+            {{text.body}}
+          </div>
+          <div class="item item-divider">
+            {{text.footer}}
+          </div>
+        </div>
+
+        <div ng-show=isSuccess()>
+          <a class="item item-icon-left" ng-click="play()">
+            <i class="icon ion-headphone"></i> Push me
+          </a>
+        </div>
+
+        <div ng-show=isPlayable()>
+          <audio controls ng-src='{{audioSrc}}' autoplay></audio>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

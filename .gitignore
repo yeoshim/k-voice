@@ -1,0 +1,27 @@
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+hooks/
+node_modules/
+platforms/
+plugins/
+resources/
+scss/
+
+server/node_modules/
+*.wav
+
+www/img
+www/manifest.json
+
+.DS_Store
+.bowerrc
+.editorconfig
+.idea/
+bower.json
+config.xml
+gulpfile.js
+
+ionic.config.json
+package.json
+service-worker.js
