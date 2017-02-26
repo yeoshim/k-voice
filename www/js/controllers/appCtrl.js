@@ -252,18 +252,13 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
     }
 
     function initializeRecorder(stream) {
-      // var context = new ($window.AudioContext || $window.webkitAudioContext)();
       var context = new (window.AudioContext || window.webkitAudioContext)();
-      // var audioContext = window.AudioContext;
-      // var context = new audioContext();
       var audioInput = context.createMediaStreamSource(stream);
       var bufferSize = 2048;
 
       analyserNode = context.createAnalyser();
-      // $log.info( 'create analyserNode: ' + analyserNode );
 
       // create a javascript node
-      // var recorder = context.createJavaScriptNode(bufferSize, 1, 1);
       var recorder = (context.createScriptProcessor ||
       context.createJavaScriptNode).call(context, bufferSize, 1, 1);
 
@@ -275,22 +270,9 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
       // connect our recorder to the previous destination
       recorder.connect(context.destination);
 
-      // canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
-
-
-//  source -> audioInput
-      // source = audioCtx.createMediaStreamSource(stream);
       audioInput.connect(analyserNode);
-
-      // analyserNode.connect(distortion);
-      // distortion.connect(biquadFilter);
-      // biquadFilter.connect(convolver);
-      // convolver.connect(gainNode);
-      // gainNode.connect(audioCtx.destination);
-
+      
       visualize();
-      // voiceChange();
-
     }
 
     function visualize() {
@@ -298,10 +280,8 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
       HEIGHT = canvas.height;
 
       analyserNode.fftSize = 1024;
-      // analyserNode.fftSize = 256;
       var bufferLength = analyserNode.frequencyBinCount;
       dataArray = new Uint8Array(bufferLength);
-      // var dataArray = new Uint8Array(bufferLength);
 
       canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
 
