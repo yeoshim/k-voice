@@ -67,10 +67,6 @@ server.on('connection', function (client) {
 
       // request for a audio
       case 'play':
-        // if( playStream )  {
-        //   playStream.end();
-        //   playStream = null;
-        // }
         console.log( "play event!!!" );
         console.log( "request: " + meta.fileName );
         playStream = fs.createReadStream(meta.fileName);
@@ -100,11 +96,6 @@ function clearStream()  {
     fileWriter.end();
     fileWriter = null;
   }
-
-  // if( playStream )  {
-  //   playStream.end();
-  //   playStream = null;
-  // }
 }
 
 function streamingRecognize (meta, client) {
@@ -122,7 +113,6 @@ function streamingRecognize (meta, client) {
 
 
   // Stream the audio to the Google Cloud Speech API
-  // const recognizeStream = speech.createRecognizeStream(request)
   recognizeStream = speech.createRecognizeStream(request)
     .on('error',console.error)
     .on('data', (data) => successSpeech(data, meta.target, client) );
@@ -149,8 +139,6 @@ function successSpeech(data, target, client) {
       client.write( result );
 
       setTimeout(function(){ clearStream() }, WAITING_TIME);
-      // clearStream();
-
   }, function (error) {
 
     });
@@ -181,12 +169,6 @@ function translateText(input, target) {
     .then((results) => {
       let translations = results[0];
       translations = Array.isArray(translations) ? translations : [translations];
-
-      // console.log('Translations:');
-      // translations.forEach((translation, i) => {
-      //     console.log(`${input[i]} => (${target}) ${translation}`);
-      // });
-
       return translations;
     }, console.error );
 }
