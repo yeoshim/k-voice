@@ -213,7 +213,8 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
 
     ///////////////////////////////
     //  for checking...
-    const SPEAK_TIME = 8;  //  안녕
+    const SPEAK_TIME = 5;  //  안녕
+    // const SPEAK_TIME = 8;  //  안녕
     const END_SPEAK_TIME = 15;
     const SPEAK_VOL = 10;
     const NOSPEAK_VOL = 1;

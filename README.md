@@ -2,6 +2,9 @@
 > Streaming Service for voice recognition and translation based on [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API), [Google Cloud Platform](https://cloud.google.com/) services
 
 * [Demo Page](https://kvoice.howdilab.com)
+* When click recording button => Mixed Content Issue: [Solution(en)](https://support.google.com/chrome/answer/1342714?hl=en), [Solution(ko)](https://support.google.com/chrome/answer/1342714?hl=en)
+* <img src="http://techdows.com/wp-content/uploads/2016/07/Chrome-This-Page-is-trying-to-load-scripts-from-unauthenticated-sources-alert.png">
+
 
 This service provides the following functionality:
 * Voice recognition based on [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) and [Google Cloud Speech API (Alpha)](https://github.com/GoogleCloudPlatform/google-cloud-node#google-cloud-speech-alpha)
