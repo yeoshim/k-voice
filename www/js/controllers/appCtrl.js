@@ -30,9 +30,9 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
   const WAITING_TIME = 10000;  //  10 sec
   var isWating = false;
 
-  const INIT_MSG = '마이크를 누르고 말하세요.';
-  const SUCCESS_MSG = '성공!!! 해드셋을 누르면 재생됩니다.';
-  const FAIL_MSG = '인식에 실패하였습니다. 다시 시도하세요...';
+  const INIT_MSG = '마이크 버튼을 누르고 말하세요.';
+  const SUCCESS_MSG = '성공!!! 해드셋 버튼을 누르면 재생됩니다.';
+  const FAIL_MSG = '인식(분석)에 실패하였습니다. 다시 시도하세요...';
   const SPEAK_MSG = '말하세요';
 
   $scope.text = {
@@ -44,17 +44,8 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
   $rootScope.isSupported = true;
   $scope.audioSrc = null;
 
-
   initRecorder();
 
-  $scope.toggleServer = function () {
-    if( $scope.serverHost == 'localhost' )  {
-      $scope.serverHost = 'Demo Server';
-    }
-    else  {
-      $scope.serverHost = 'localhost';
-    }
-  };
 
   $scope.isSuccess = function () {
     return $scope.text.header == SUCCESS_MSG;
@@ -100,8 +91,10 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
   }
 
   $scope.play = function () {
-    $log.info( 'play init stream!!!' );
-    initClient( 'play' );
+    Loading.show("Init Streaming...").then(function()  {
+      $log.info( 'play init stream!!!' );
+      initClient( 'play' );
+    });
   };
 
   function emit(event, data, file) {
@@ -171,6 +164,8 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
               $scope.audioSrc = $sce.trustAsResourceUrl(src);
               isPlayable = true;
               scopeApply();
+
+              Loading.hide();
             });
           });
           emit('play', { fileName: fileName });
@@ -220,10 +215,8 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
     //  for checking...
     const SPEAK_TIME = 8;  //  안녕
     const END_SPEAK_TIME = 15;
-    const SPEAK_VOL = 20;
-    const NOSPEAK_VOL = 5;
-    // const SPEAK_VOL = 10;
-    // const NOSPEAK_VOL = 1;
+    const SPEAK_VOL = 10;
+    const NOSPEAK_VOL = 1;
 
     var speakCnt = 0;
     var noSpeakCnt = 0;
@@ -271,7 +264,7 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
       recorder.connect(context.destination);
 
       audioInput.connect(analyserNode);
-      
+
       visualize();
     }
 
