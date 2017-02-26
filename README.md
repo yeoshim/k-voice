@@ -14,7 +14,8 @@ Client-side component works with the following browsers:
 
 # Workflow
 
-1. Google Cloud
+* Google Cloud
+
 Install [Google Cloud SDK](https://cloud.google.com/sdk/downloads)
 
 And then
@@ -22,7 +23,7 @@ And then
 $ gcloud beta auth application-default login
 ```
 
-2. Server-side
+* Server-side
 ```sh
 $ git clone https://github.com/yeoshim/k-voice.git
 $ cd k-voice/server
@@ -30,7 +31,7 @@ $ npm install
 $ node streamServer.js
 ```
 
-3. Client-side
+* Client-side
 ```sh
 $ cd k-voice/www
 $ python -m SimpleHTTPServer
