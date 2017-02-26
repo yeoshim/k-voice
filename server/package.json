@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "streamServer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/speech": "^0.6.0",
+    "@google-cloud/translate": "^0.7.0",
+    "binaryjs": "^0.2.1",
+    "wav": "^1.0.1"
+  }
+}
