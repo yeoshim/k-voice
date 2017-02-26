@@ -23,5 +23,4 @@ config.xml
 gulpfile.js
 
 ionic.config.json
-package_ionic.json
 service-worker.js
