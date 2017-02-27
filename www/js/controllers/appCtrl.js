@@ -68,6 +68,7 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
   };
 
   function queryToServer() {
+    $log.info( "call queryToServer!!!");
     isRecording = false;
 
     $scope.text.header = '분석중...';
@@ -223,8 +224,8 @@ app.controller('appCtrl', function ($rootScope, $scope, $log, ionicMaterialInk, 
     const SPEAK_TIME = 5;  //  안녕
     // const SPEAK_TIME = 8;  //  안녕
     const END_SPEAK_TIME = 15;
-    const SPEAK_VOL = 10;
-    const NOSPEAK_VOL = 1;
+    const SPEAK_VOL = 10;  //  start sensitivity
+    const NOSPEAK_VOL = 3;  //  stop sensitivity
 
     var speakCnt = 0;
     var noSpeakCnt = 0;

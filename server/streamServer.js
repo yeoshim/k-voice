@@ -111,7 +111,6 @@ function streamingRecognize (meta, client) {
     interimResults: false
   };
 
-
   // Stream the audio to the Google Cloud Speech API
   recognizeStream = speech.createRecognizeStream(request)
     .on('error',console.error)
@@ -121,26 +120,32 @@ function streamingRecognize (meta, client) {
 }
 
 function successSpeech(data, target, client) {
-  console.log('Data received: %j', data);
+  // console.log('Data received: %j', data);
 
   if( data.results != "" ) {
     // console.log('Data received: %j', data);
     console.log('send Data: %j', data.results);
-    translateText(data.results, target, client).then(function (transResult) {
-      var result = {};
+    var result = {};
 
+    translateText(data.results, target, client).then(function (transResult) {
       transResult.forEach((translation, i) => {
         result.ori = data.results;
         result.dest = translation;
         result.target = target;
       })
-
-      console.log( 'client.write: ' + JSON.stringify(result) );
+      // console.log( 'client.write: ' + JSON.stringify(result) );
       client.write( result );
 
       setTimeout(function(){ clearStream() }, WAITING_TIME);
   }, function (error) {
+      console.error("[google translation error]: " + error);
+      result.ori = data.results;
+      result.dest = 'not translation';
+      result.target = target;
+      // console.log( 'client.write(w/o): ' + JSON.stringify(result) );
+      client.write( result );
 
+      setTimeout(function(){ clearStream() }, WAITING_TIME);
     });
   }
   isAnalyzing = false;
@@ -170,5 +175,5 @@ function translateText(input, target) {
       let translations = results[0];
       translations = Array.isArray(translations) ? translations : [translations];
       return translations;
-    }, console.error );
+    } );
 }
