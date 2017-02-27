@@ -121,7 +121,6 @@ function streamingRecognize (meta, client) {
 
 function successSpeech(data, target, client) {
   // console.log('Data received: %j', data);
-
   if( data.results != "" ) {
     // console.log('Data received: %j', data);
     console.log('send Data: %j', data.results);
@@ -140,7 +139,7 @@ function successSpeech(data, target, client) {
   }, function (error) {
       console.error("[google translation error]: " + error);
       result.ori = data.results;
-      result.dest = 'not translation';
+      result.dest = ' ' + error;
       result.target = target;
       // console.log( 'client.write(w/o): ' + JSON.stringify(result) );
       client.write( result );
